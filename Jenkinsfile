@@ -8,6 +8,6 @@ pipeline {
               archive 'target/*.jar' 
 
             }
-        }   //stage ending comment
+        }   //stage ending comment 1
     }
 }
