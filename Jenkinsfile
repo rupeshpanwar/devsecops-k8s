@@ -14,6 +14,12 @@ pipeline {
             steps {
               sh "mvn test"
             }
+            post {
+              always {
+                junit 'taget/surface-reports/*.xml'
+                jococo execPattern 'target/jococo.exec'
+              }
+            }
       }   //stage ending Unit test
     }
 }
