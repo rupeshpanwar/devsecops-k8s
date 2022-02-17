@@ -21,5 +21,16 @@ pipeline {
               }
       }
       }   //stage ending Unit test
+
+      stage('Docker build & push') {
+            steps {
+              withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
+                  sh 'printenv'
+                  sh 'docker build -t rupeshpanwar/numeric-app:""$GIT_COMMIT"" .'
+                  sh 'docker push rupeshpanwar/numeric-app:""$GIT_COMMIT""'
+                }
+            }
+      }   //stage ending Docker build and push 
+
     }
 }
