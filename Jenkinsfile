@@ -16,10 +16,10 @@ pipeline {
             }
             post {
               always {
-                junit 'taget/surface-reports/*.xml'
-                jococo execPattern 'target/jococo.exec'
+                junit 'target/surefire-reports/*.xml'
+                jacoco execPattern: 'target/jacoco.exec'
               }
-            }
+      }
       }   //stage ending Unit test
     }
 }
