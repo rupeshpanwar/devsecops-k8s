@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+          node {
+              label "docker"
+              customWorkspace "~/deployment"
+            }
+        }
 
   stages {
       stage('Build Artifact') {
@@ -19,8 +24,19 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
                 jacoco execPattern: 'target/jacoco.exec'
               }
-      }
+          }
       }   //stage ending Unit test
+
+      stage('Mutation Tests - PIT') {
+          steps {
+              sh "mvn org.pitest:pitest-maven:mutationCoverage"
+            }
+            post {
+              always {
+                pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+              }
+          }
+      }   // stage ending PIT mutations test
 
       stage('Docker build & push') {
             steps {
