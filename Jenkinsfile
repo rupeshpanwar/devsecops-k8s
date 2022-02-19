@@ -2,7 +2,7 @@ pipeline {
   agent {
           node {
               label "docker"
-              customWorkspace "~/deployment"
+              customWorkspace "/tmp/deployment"
             }
         }
 
