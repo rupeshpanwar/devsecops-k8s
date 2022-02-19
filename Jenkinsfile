@@ -51,6 +51,16 @@ pipeline {
           }
       } // stage ending SonarQube - SAST
 
+      stage('Vulnerability Scan') {
+          steps {
+            sh "mvn dependency-check:check"
+          }
+          post {
+            always {
+              dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+            }
+          }
+      } // stage ending Vulnerability Scan
 
       stage('Docker build & push') {
             steps {
