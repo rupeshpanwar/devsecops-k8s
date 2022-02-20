@@ -40,12 +40,25 @@ pipeline {
           }
       } // stage ending SonarQube - SAST
 
+      // stage('Vulnerability Scan') {
+      //     steps {
+      //       sh "mvn dependency-check:check"
+      //     }
+         
+      // } // stage ending Vulnerability Scan
+
       stage('Vulnerability Scan') {
           steps {
-            sh "mvn dependency-check:check"
+            parallel(
+              "Dependency Scan": {
+                sh "mvn dependency-check:check"
+              },
+              "Trivy Scan": {
+                sh "bash trivy-docker-image-scan.sh"
+              }
+            )
           }
-         
-      } // stage ending Vulnerability Scan
+    } // stage ending Vulnerability Scan
 
       stage('Docker build & push') {
             steps {
@@ -68,20 +81,12 @@ pipeline {
 
     } // Stages section end here
 
-   post {
-    always {
-      junit 'target/surefire-reports/*.xml'
-      jacoco execPattern: 'target/jacoco.exec'
-      pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
-      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-    }
-
-    // success {
-
-    // }
-
-    // failure {
-
-    // }
-  }
+    post {
+          always {
+            junit 'target/surefire-reports/*.xml'
+            jacoco execPattern: 'target/jacoco.exec'
+            pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+            dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+          }
+     }
 }
