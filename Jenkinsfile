@@ -12,7 +12,7 @@ pipeline {
     serviceName = "devsecops-svc"
     imageName = "rupeshpanwar/numeric-app:${GIT_COMMIT}"
     applicationURL = "http://142.93.213.194"
-    applicationURI = "/compare/51"
+    applicationURI = "compare/51"
   }
 
   stages {
