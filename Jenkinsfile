@@ -130,20 +130,22 @@ pipeline {
     }  // stage ending k8s deployment -  DEV
 
       stage('Integration Tests - DEV') {
-      steps {
-        script {
-          try {
-            withKubeConfig([credentialsId: 'kubeconfig']) {
-              sh "bash integration-test.sh"
-            }
-          } catch (e) {
-            withKubeConfig([credentialsId: 'kubeconfig']) {
-              sh "kubectl -n default rollout undo deploy ${deploymentName}"
-            }
-            throw e
-          }
-        }
-      } //stage ending Integration testing 
+            steps {
+                    script {
+                      try {
+                        withKubeConfig([credentialsId: 'kubeconfig']) {
+                          sh "bash integration-test.sh"
+                        }
+                      } catch (e) {
+                        withKubeConfig([credentialsId: 'kubeconfig']) {
+                          sh "kubectl -n default rollout undo deploy ${deploymentName}"
+                        }
+                        throw e
+                      }
+                    }
+                 }
+            } //stage ending Integration testing 
+
 
     } // Stages section end here
 
