@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 git add .
-git commit -m 'owasp zap'
+git commit -m 'slack notification'
 git push
