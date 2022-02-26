@@ -146,16 +146,17 @@ pipeline {
                  }
             } //stage ending Integration testing 
 
+        stage('OWASP ZAP - DAST') {
+          steps {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh 'bash zap.sh'
+            }
+          }
+    } // stage ending owasp zap - dast
 
     } // Stages section end here
 
-     stage('OWASP ZAP - DAST') {
-      steps {
-        withKubeConfig([credentialsId: 'kubeconfig']) {
-          sh 'bash zap.sh'
-        }
-      }
-    } // stage ending owasp zap - dast
+   
 
     post {
           always {
