@@ -133,8 +133,9 @@ pipeline {
             steps {
                     script {
                       try {
-                        withKubeConfig([credentialsId: 'kubeconfig']) {
-                          sh "bash integration-test.sh"
+                        echo "successfully started"
+                        // withKubeConfig([credentialsId: 'kubeconfig']) {
+                        //   sh "bash integration-test.sh"
                         }
                       } catch (e) {
                         withKubeConfig([credentialsId: 'kubeconfig']) {
