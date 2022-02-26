@@ -28,6 +28,7 @@ pipeline {
              always {
                 sendNotification currentBuild.result
           }
+       }
 
       }   //stage ending Build Artifact
 
@@ -39,6 +40,7 @@ pipeline {
              always {
                 sendNotification currentBuild.result
           }
+        }
       }   //stage ending Unit test
 
       stage('Mutation Tests - PIT') {
@@ -168,7 +170,8 @@ pipeline {
              always {
                 sendNotification currentBuild.result
           }
-    } // stage ending owasp zap - dast
+        }
+      } // stage ending owasp zap - dast
 
     } // Stages section end here
 
