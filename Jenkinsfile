@@ -23,13 +23,14 @@ pipeline {
         sh 'exit 0'
       }
     }
+    }
      post {
           always {
         
              sendNotification currentBuild.result
           }
      }
-   }
+   
 }
 //   // stages {
 //       stage('Build Artifact') {
