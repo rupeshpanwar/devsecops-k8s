@@ -22,25 +22,15 @@ pipeline {
             steps {
               sh "mvn clean package -DskipTests=true"
               archive 'target/*.jar' 
-
             }
-            post {
-             always {
-                sendNotification currentBuild.result
-          }
-       }
-
-      }   //stage ending Build Artifact
+           
+     }   //stage ending Build Artifact
 
       stage('Unit test') {
             steps {
               sh "mvn test"
             }
-            post {
-             always {
-                sendNotification currentBuild.result
-          }
-        }
+          
       }   //stage ending Unit test
 
       stage('Mutation Tests - PIT') {
@@ -166,11 +156,6 @@ pipeline {
               sh 'bash zap.sh'
             }
           }
-          post {
-             always {
-                sendNotification currentBuild.result
-          }
-        }
       } // stage ending owasp zap - dast
 
     } // Stages section end here
