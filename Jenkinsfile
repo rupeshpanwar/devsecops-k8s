@@ -17,12 +17,17 @@ pipeline {
     applicationURI = "compare/51"
   }
   
-  // stages {
+   stages {
       stage('Build Artifact') {
             steps {
               sh "mvn clean package -DskipTests=true"
               archive 'target/*.jar' 
             }
+             post {
+                always {
+                    sendNotification currentBuild.result
+                    }
+              }
            
      }   //stage ending Build Artifact
 
@@ -30,6 +35,11 @@ pipeline {
             steps {
               sh "mvn test"
             }
+            post {
+                always {
+                    sendNotification currentBuild.result
+                    }
+              }
           
       }   //stage ending Unit test
 
@@ -159,9 +169,6 @@ pipeline {
       } // stage ending owasp zap - dast
 
     } // Stages section end here
-
-   
-
     post {
           always {
             junit 'target/surefire-reports/*.xml'
